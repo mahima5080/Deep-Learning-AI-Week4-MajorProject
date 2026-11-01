@@ -1,0 +1,25 @@
+name: Deep Learning Capstone CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Test Application Import
+      run: |
+        python -c "import main; print('Medical API Server Import Successful!')"
+    - name: Build Docker Image
+      run: |
+        docker build -t medical-dl-capstone:latest .
